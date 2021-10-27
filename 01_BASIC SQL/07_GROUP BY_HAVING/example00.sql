@@ -1,0 +1,6 @@
+-- 02. GROUP BY 절
+
+-- K-리그 선수들의 포지션별 평균키
+SELECT POSITION 포지션, , COUNT(*) 인원수, COUNT(P_HEIGHT) 키대상, MAX(P_HEIGHT) 최대키, MIN(P_HEIGHT) 최소키, ROUND(AVG(P_HEIGHT), 2) 평균키
+FROM PLAYER
+GROUP BY POSITION;

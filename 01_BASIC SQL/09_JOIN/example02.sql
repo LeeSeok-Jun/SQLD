@@ -1,0 +1,14 @@
+-- 04. 3개 이상 TABLE JOIN
+
+-- 선수-팀-전용구장 3개의 테이블을 JOIN
+-- 선수-팀 : TEAM_ID COLUMN으로 PK-FK 관계
+-- 팀-전용구장 : STADIUM_ID COLUMN으로 PK-FK 관계
+-- 3개 이상의 TABLE JOIN이므로 2(3-1)개 이상의 WHERE 조건 필요
+SELECT P.PLAYER_NAME 선수명, P.POSITION 포지션,
+       T.REGION_NAME 연고지, T.TEAM_NAME 팀명,
+       S.STADIUM_NAME 구장명
+FROM PLAYER P, TEAM T, STADIUM S
+WHERE P.TEAM_ID = T.TEAM_ID AND T.STADIUM_ID = S.STADIUM_ID
+ORDER BY 선수명
+
+
