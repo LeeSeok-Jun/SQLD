@@ -1,0 +1,30 @@
+-- 04. GROUPING SETS 함수
+
+-- 일반 그룹함수를 이용한 SQL
+-- 일반 그룹함수를 이용하여 부서별, JOB별 인원수와 급여 합을 구하라.
+SELECT DNAME, 'All Jobs' JOB, COUNT(*) "Total Empl", SUM(SAL) "Total Sal"
+FROM EMP, DEPT
+WHERE DEPT.DEPTNO = EMP.DEPTNO
+GROUP BY DNAME
+UNION ALL
+SELECT 'All Departments' DNAME, JOB, COUNT(*) "Total Empl", SUM(SAL) "Total Sal"
+FROM EMP, DEPT
+WHERE DEPT.DEPTNO = EMP.DEPTNO
+GROUP BY JOB;
+
+-- GROUPING SETS 사용 SQL
+-- 일반 그룹함수를 GROUPING SETS 함수로 변경하여 부서별, JOB별 인원수와 급여 합을 구하라
+SELECT 
+    DECODE(GROUPING(DNAME), 1, 'All Departments', DNAME) AS DNAME
+    DECODE(GROUPING(JOB), 1, 'All Jobs', JOB) AS JOB,
+    COUNT(*) "Total Empl", SUM(SAL) "Total Sal"
+FROM EMP, DEPT
+WHERE DEPT.DEPTNO = EMP.DEPTNO
+GROUP BY GROUPING SETS (DNAME, JOB);    -- 해당 인수의 순서가 바뀌어도 결과는 동일
+
+-- 3개의 인수를 이용한 GROUPING SETS 이용
+SELECT DNAME, JOB, MGR, SUM(SAL) "Total Sal"
+FROM EMP, DEPT
+WHERE DEPT.DEPTNO = EMP.DEPTNO
+GROUP BY GROUPING SETS
+    ((DNAME, JOB, MGR), (DNAME, JOB), (JOB, MGR));
